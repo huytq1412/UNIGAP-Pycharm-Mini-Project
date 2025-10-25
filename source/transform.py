@@ -1,5 +1,4 @@
 import re
-import pandas as pd
 
 def add_salary(salary_str):
     # Check salary_str passed in as str
@@ -19,23 +18,39 @@ def add_salary(salary_str):
     else:
         unit = 'VND'
 
+    currency_multiply = {
+        'tỷ': 1000000000,
+        'triệu': 1000000,
+        'nghìn': 1000,
+        'ngàn': 1000
+    }
+
+    multiplier = 1
+
+    for key, value in currency_multiply.items():
+        if key in salary_str:
+            multiplier = value
+
     cleaned_salary_str = re.sub(r'[^\d\-.,]', '', salary_str).strip()
 
     # Standardize and process "X - Y"
-    if re.search(r'\d+\s*\-\s*\d+[.,]\d+', cleaned_salary_str):
+    if re.search(r'\d+([.,]\d+)?\s*\-\s*\d+([.,]\d+)?', cleaned_salary_str):
         salary = cleaned_salary_str.split("-")
-        min_salary = salary[0]
-        max_salary = salary[1]
+        min_salary = float(salary[0].replace(',', '')) * multiplier
+        max_salary = float(salary[1].replace(',', '')) * multiplier
         return min_salary, max_salary, unit
 
     # Standardize and process "Tới X" or "Trên X"
     min_salary, max_salary = None, None
 
-    if re.search(r'\d+', cleaned_salary_str):
-        salary = float(cleaned_salary_str)
-        if 'Tới' or 'Tá»›i' in salary_str:
+    if re.search(r'\d+([.,]\d+)?', cleaned_salary_str):
+        cleaned_salary_str = cleaned_salary_str.replace(',', '')
+
+        salary = float(cleaned_salary_str) * multiplier
+
+        if 'Tới' in salary_str or 'Tá»›i' in salary_str:
             max_salary = salary
-        elif 'Trên' or 'TrÃªn' in salary_str:
+        elif 'Trên' in salary_str or 'TrÃªn' in salary_str:
             min_salary = salary
         else:
             max_salary = salary
@@ -84,7 +99,7 @@ def group_job_tile(job_title_str):
         'Admin': ['secretary', 'thư ký'],
     }
     job_title_str = job_title_str.lower().strip()
-
+    # print(job_title_str)
     for key in job_group.keys():
         for value in job_group[key]:
             if value in job_title_str:
@@ -96,11 +111,12 @@ def cleaning_data(df):
     # 1. Chuẩn hóa cột salary về dạng số, xử lý các giá trị như "Thoả thuận", "Trên X triệu", "X - Y triệu", "Tới X triệu"
     # 2. Tạo thêm các cột phụ: min_salary, max_salary, salary_unit (VND/USD)
     salary_list = []
+
     for salary_str in df['salary']:
         result = add_salary(salary_str)
         salary_list.append(result)
 
-    df['min_salary','max_salary','unit'] = pd.DataFrame(salary_list)
+    df[['min_salary', 'max_salary', 'unit']] = salary_list
 
     # 3. Xử lý cột address để tách thành city và district
     address_list = []
@@ -108,25 +124,12 @@ def cleaning_data(df):
         result = split_address(address_str)
         address_list.append(result)
 
-    df['city', 'address'] = pd.DataFrame(address_list)
+    df[['city', 'district']] = address_list
 
     # 4. Chuẩn hóa job_title để gom nhóm các vị trí tương tự (ví dụ: "Software Engineer", "Developer", "Programmer" có thể gom vào một nhóm)
     job_group_list = []
-    for job_group_str in df['address']:
-        result = split_address(job_group_str)
+    for job_group_str in df['job_title']:
+        result = group_job_tile(job_group_str)
         job_group_list.append(result)
 
-    df['job_group'] = pd.DataFrame(job_group_list)
-
-# print(add_salary('Trên 10.5  triệu'))
-# print(add_salary('Tới 50 triệu'))
-# print(add_salary('10 - 30,5 triệu'))
-# print(add_salary('10.52 USD'))
-
-# print(split_address('Hà Nội: Cầu Giấy'))
-# print(split_address('Hồ Chí Minh'))
-# print(split_address('Toàn Quốc'))
-
-# print(group_job_tile('Business Analyst'))
-# print(group_job_tile('Nhân Viên Lập Trình Phần Mềm - Thu Nhập Từ 10 - 20 Triệu'))
-# print(group_job_tile('Nhello'))
+    df['job_group'] = job_group_list
