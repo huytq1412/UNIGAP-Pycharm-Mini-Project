@@ -1,6 +1,6 @@
 import pandas as pd
-from source.transform import cleaning_data
-from source.load import loadtodb
+from transform import cleaning_data
+from load import loadtodb
 
 def etl(data_path, db_conn_uri):
     try:

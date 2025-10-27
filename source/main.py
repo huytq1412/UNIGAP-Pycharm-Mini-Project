@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from source.ETL import etl
+from ETL import etl
 
 if __name__ == '__main__':
     load_dotenv()
