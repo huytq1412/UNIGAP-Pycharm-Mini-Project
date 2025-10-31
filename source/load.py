@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 def loadtodb(df, db_conn_uri, tgt_table):
     tmp_table = 'tmptable'
 
+    # Connect to PostgreSQL database
     try:
         engine = create_engine(db_conn_uri)
         print('Connected to database successfully')
@@ -13,6 +14,7 @@ def loadtodb(df, db_conn_uri, tgt_table):
 
     with engine.begin() as connection:
         try:
+            # Create target table
             connection.execute(text(f'''   
                 CREATE TABLE IF NOT EXISTS {tgt_table} (
                     id SERIAL PRIMARY KEY,
@@ -30,6 +32,7 @@ def loadtodb(df, db_conn_uri, tgt_table):
                     district TEXT,
                     job_group TEXT);'''))
 
+            # Create temp table
             connection.execute(text(f'''
                 CREATE TEMP TABLE IF NOT EXISTS {tmp_table}(
                     id SERIAL PRIMARY KEY,
@@ -47,8 +50,10 @@ def loadtodb(df, db_conn_uri, tgt_table):
                     district TEXT,
                     job_group TEXT);'''))
 
+            # Load data from DataFrame into temp table
             df.to_sql(tmp_table, con=connection, if_exists='append', index=False)
 
+            # Merge data from temp table to target table
             connection.execute(text(f'''
                 INSERT INTO {tgt_table} (id, created_date, job_title, company, salary, address, time, link_description,
                                          min_salary, max_salary, unit, city, district, job_group)
@@ -63,8 +68,8 @@ def loadtodb(df, db_conn_uri, tgt_table):
                     address = EXCLUDED.address,
                     time = EXCLUDED.time,
                     link_description = EXCLUDED.link_description,
-                    min_salary = COALESCE(EXCLUDED.min_salary, 0),
-                    max_salary = COALESCE(EXCLUDED.max_salary, 0),
+                    min_salary = EXCLUDED.min_salary,
+                    max_salary = EXCLUDED.max_salary,
                     unit = EXCLUDED.unit,
                     city = EXCLUDED.city,
                     district = EXCLUDED.district,

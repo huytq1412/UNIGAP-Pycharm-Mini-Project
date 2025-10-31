@@ -48,9 +48,9 @@ def add_salary(salary_str):
 
         salary = float(cleaned_salary_str) * multiplier
 
-        if 'Tới' in salary_str or 'Tá»›i' in salary_str:
+        if 'tới' in salary_str or 'tá»›i' in salary_str:
             max_salary = salary
-        elif 'Trên' in salary_str or 'TrÃªn' in salary_str:
+        elif 'trên' in salary_str or 'trÃªn' in salary_str:
             min_salary = salary
         else:
             max_salary = salary
@@ -99,7 +99,7 @@ def group_job_tile(job_title_str):
         'Admin': ['secretary', 'thư ký'],
     }
     job_title_str = job_title_str.lower().strip()
-    # print(job_title_str)
+
     for key in job_group.keys():
         for value in job_group[key]:
             if value in job_title_str:
