@@ -11,7 +11,7 @@ Mini Project/
 │   ├── ETL.py                # Yêu cầu 2
 │   ├── report.py             # Yêu cầu 3
 │   └── main.py               # File main
-├── tests/
+├── test/
 │   ├── __init__.py
 │   ├── test_transform.py     # Unit test hàm trong transform.py
 │   └── test_load.py          # Unit test hàm trong load.py
