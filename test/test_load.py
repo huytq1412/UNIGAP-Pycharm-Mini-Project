@@ -7,16 +7,16 @@ from source.load import loadtodb
 from pandas.testing import assert_frame_equal
 
 # Get current file directory
-CURRENT_DIR = os.path.dirname(__file__)
+current_dir = os.path.dirname(__file__)
 
 # Get project root directory
-PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, '..'))
+project_dir = os.path.abspath(os.path.join(current_dir, '..'))
 
 # Get file .env directory
-ENV_PATH = os.path.join(PROJECT_ROOT, '.env')
+env_path = os.path.join(project_dir, '.env')
 
 # Connect to file .env
-load_dotenv(dotenv_path=ENV_PATH)
+load_dotenv(dotenv_path=env_path)
 
 db_host = os.environ.get('DB_HOST')
 db_port = os.environ.get('DB_PORT')
