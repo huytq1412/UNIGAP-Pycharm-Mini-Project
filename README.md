@@ -1,3 +1,5 @@
+Mở file readme để xem cấu trúc của project
+
 Mini Project/
 ├── data/
 │   └── data.csv              # File dữ liệu CSV 
