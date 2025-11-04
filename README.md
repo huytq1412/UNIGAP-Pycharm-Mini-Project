@@ -1,5 +1,6 @@
 Mở file readme để xem cấu trúc của project
 
+```
 Mini Project/
 ├── data/
 │   └── data.csv              # File dữ liệu CSV 
@@ -18,3 +19,4 @@ Mini Project/
 ├── .gitignore                # File loại trừ khi đẩy lên git
 ├── requirements.txt          # Các thư viện cần cài
 └── runETL.sh                 # File bash để chạy file main
+```
