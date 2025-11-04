@@ -16,6 +16,9 @@ Mini Project/
 │   ├── test_transform.py     # Unit test hàm trong transform.py
 │   └── test_load.py          # Unit test hàm trong load.py
 ├── .env                      # Các biến môi trường (không đẩy lên git)
+│                               Bao gồm các biến kết nối tới PostgreSQL,
+│                                       DATA_PATH(đường dẫn lưu file csv),
+│                                       REPORT_PATH(đường dẫn kết xuất các report)
 ├── .gitignore                # File loại trừ khi đẩy lên git
 ├── requirements.txt          # Các thư viện cần cài
 └── runETL.sh                 # File bash để chạy file main và sử dụng cron để tạo lịch tự động chạy pipeline
