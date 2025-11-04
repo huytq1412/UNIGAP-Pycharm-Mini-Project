@@ -1,4 +1,4 @@
-Mở file readme để xem cấu trúc của project
+Cấu trúc của mini project
 
 ```
 Mini Project/
@@ -18,5 +18,5 @@ Mini Project/
 ├── .env                      # Các biến môi trường (không đẩy lên git)
 ├── .gitignore                # File loại trừ khi đẩy lên git
 ├── requirements.txt          # Các thư viện cần cài
-└── runETL.sh                 # File bash để chạy file main
+└── runETL.sh                 # File bash để chạy file main và sử dụng cron để tạo lịch tự động chạy pipeline
 ```
