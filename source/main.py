@@ -3,6 +3,18 @@ from dotenv import load_dotenv
 from ETL import etl
 from report import getdata_fromdb, plot_salary_distribution, plot_job_heatmap, plot_techtrend
 
+# Get current file directory
+CURRENT_DIR = os.path.dirname(__file__)
+
+# Get project root directory
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, '..'))
+
+# Get file .env directory
+ENV_PATH = os.path.join(PROJECT_ROOT, '.env')
+
+# Connect to file .env
+load_dotenv(dotenv_path=ENV_PATH)
+
 if __name__ == '__main__':
     load_dotenv()
 

@@ -24,7 +24,7 @@ def loadtodb(df, db_conn_uri, tgt_table):
                     salary TEXT,
                     address TEXT,
                     time VARCHAR(256),
-                    link_description TEXT NOT NULL UNIQUE,
+                    link_description TEXT NOT NULL,
                     min_salary NUMERIC(12, 2),
                     max_salary NUMERIC(12, 2),
                     unit VARCHAR(25),

@@ -8,7 +8,7 @@ def add_salary(salary_str):
     salary_str = salary_str.lower().strip()
 
     # Standardize and process "Thoả thuận"
-    pattern = 'thoả thuận|thoáº£ thuáº­n'
+    pattern = 'thoả thuận'
 
     if re.search(pattern, salary_str):
         return None, None, None
@@ -48,9 +48,9 @@ def add_salary(salary_str):
 
         salary = float(cleaned_salary_str) * multiplier
 
-        if 'tới' in salary_str or 'tá»›i' in salary_str:
+        if 'tới' in salary_str:
             max_salary = salary
-        elif 'trên' in salary_str or 'trÃªn' in salary_str:
+        elif 'trên' in salary_str :
             min_salary = salary
         else:
             max_salary = salary
@@ -62,7 +62,7 @@ def split_address(address_str):
     if not isinstance(address_str, str):
         return None, None
 
-    # Separation rules Addres = City:District
+    # Separation rules Address = City:District
     address = [x.strip() for x in address_str.split(":")]
 
     if len(address) > 1:
