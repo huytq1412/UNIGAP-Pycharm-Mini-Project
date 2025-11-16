@@ -3,14 +3,16 @@ Cấu trúc của mini project
 ```
 Mini Project/
 ├── data/
-│   └── data.csv              # File dữ liệu CSV 
+│   ├── data.csv                # File dữ liệu CSV 
+│   └── dataTopCV.csv           # File dữ liệu CSV của TopCV 
 ├── source/
 │   ├── __init__.py
-│   ├── transform.py          # Yêu cầu 1
-│   ├── load.py               # Yêu cầu 2
-│   ├── ETL.py                # Yêu cầu 2
-│   ├── report.py             # Yêu cầu 3
-│   └── main.py               # File main
+│   ├── transform.py            # Yêu cầu 1
+│   ├── load.py                 # Yêu cầu 2
+│   ├── ETL.py                  # Yêu cầu 2
+│   ├── report.py               # Yêu cầu 3
+│   ├── main.py                 # File main
+│   └──data_scrapping_TopCV.py  # File scrapping data từ TopCV
 ├── test/
 │   ├── __init__.py
 │   ├── test_transform.py     # Unit test hàm trong transform.py
