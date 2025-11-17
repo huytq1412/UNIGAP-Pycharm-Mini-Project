@@ -87,7 +87,7 @@ def data_scrapping():
 
     existed_links = set()
 
-    # Loop through each page of data until it is finished then break
+    # Use the command below to loop through each page of data until it is finished then break
     # while True:
     # Use the command below to select the data range you want to get
     for page_number in range(1, 5):
@@ -140,8 +140,6 @@ def data_scrapping():
                     print(f"Job already exists. Skip job")
                     continue
 
-                print(link_description)
-
                 # Add a existed_links set containing existing links to check with first_link
                 existed_links.add(link_description)
 
@@ -152,8 +150,6 @@ def data_scrapping():
                 else:
                     job_title = None
 
-                print(job_title)
-
                 # get 'company'
                 company_tag = job.select_one('span.company-name')
                 if company_tag:
@@ -161,16 +157,12 @@ def data_scrapping():
                 else:
                     company = None
 
-                print(company)
-
                 # get 'salary'
                 salary_tag = job.select_one('div.info label.salary span')
                 if salary_tag:
                     salary = salary_tag.text.strip()
                 else:
                     salary = None
-
-                print(salary)
 
                 # get 'address'
                 address_tag = job.select_one('div.info label.address')
@@ -191,8 +183,6 @@ def data_scrapping():
                 else:
                     address = None
 
-                print(address)
-
                 # get 'created_date'
                 created_date_tag = job.select_one('label.label-update')
 
@@ -202,8 +192,6 @@ def data_scrapping():
                     created_date = convert_created_date(created_date_str)
                 else:
                     created_date = None
-
-                print(created_date)
 
                 tmp_jobs_list.append({
                     'created_date': created_date,
@@ -237,16 +225,13 @@ def data_scrapping():
                 time_remain = detail_data[0]
                 job_description = detail_data[1]
 
-                print(time_remain)
-                print(job_description)
-
                 tmp_jobs['time'] = time_remain
                 tmp_jobs['job_description'] = job_description
 
                 all_jobs_list.append(tmp_jobs)
 
             page_number += 1
-            time.sleep(10)  # Wait 15 seconds before scrapping the next page
+            time.sleep(10)  # Wait 10 seconds before scrapping the next page
 
         except Exception as e:
             print(f"Error while scrapping data: {e}")
